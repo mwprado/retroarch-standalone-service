@@ -1,3 +1,3 @@
 # arm
 
-These files are used for Arch ARM's kodi packages only.
+These files are used for Arch ARM's retroarch packages only.

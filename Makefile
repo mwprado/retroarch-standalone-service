@@ -1,4 +1,4 @@
-PN = kodi-standalone-service
+PN = retroarch-standalone-service
 
 PREFIX ?= /usr
 INITDIR = $(PREFIX)/lib/systemd/system
@@ -29,11 +29,11 @@ common/$(PN):
 install-common:
 	$(INSTALL_DIR) "$(DESTDIR)$(UDEVDIR)"
 	$(INSTALL_DIR) "$(DESTDIR)$(ENVDIR)"
-	$(INSTALL_DATA) $(ARCH)/udev/99-kodi.rules "$(DESTDIR)$(UDEVDIR)/99-kodi.rules"
-	$(INSTALL_DATA) common/kodi-standalone "$(DESTDIR)$(ENVDIR)/kodi-standalone"
+	$(INSTALL_DATA) $(ARCH)/udev/99-retroarch.rules "$(DESTDIR)$(UDEVDIR)/99-retroarch.rules"
+	$(INSTALL_DATA) common/retroarch-standalone "$(DESTDIR)$(ENVDIR)/retroarch-standalone"
 ifeq ($(ARCH),arm)
 	$(INSTALL_DIR) "$(DESTDIR)$(POLKDIR)"
-	$(INSTALL_DATA) $(ARCH)/polkit/polkit.rules "$(DESTDIR)$(POLKDIR)/99-kodi.rules"
+	$(INSTALL_DATA) $(ARCH)/polkit/polkit.rules "$(DESTDIR)$(POLKDIR)/99-retroarch.rules"
 endif
 
 install-init:
@@ -41,33 +41,33 @@ install-init:
 	$(INSTALL_DIR) "$(DESTDIR)$(USERDIR)"
 	$(INSTALL_DIR) "$(DESTDIR)$(TMPFDIR)"
 ifeq ($(ARCH),x86)
-	$(INSTALL_DATA) $(ARCH)/init/kodi-gbm.service "$(DESTDIR)$(INITDIR)/kodi-gbm.service"
-	$(INSTALL_DATA) $(ARCH)/init/kodi-wayland.service "$(DESTDIR)$(INITDIR)/kodi-wayland.service"
-	$(INSTALL_DATA) $(ARCH)/init/kodi-x11.service "$(DESTDIR)$(INITDIR)/kodi-x11.service"
+	$(INSTALL_DATA) $(ARCH)/init/retroarch-gbm.service "$(DESTDIR)$(INITDIR)/retroarch-gbm.service"
+	$(INSTALL_DATA) $(ARCH)/init/retroarch-wayland.service "$(DESTDIR)$(INITDIR)/retroarch-wayland.service"
+	$(INSTALL_DATA) $(ARCH)/init/retroarch-x11.service "$(DESTDIR)$(INITDIR)/retroarch-x11.service"
 else
-	$(INSTALL_DATA) $(ARCH)/init/kodi.service "$(DESTDIR)$(INITDIR)/kodi.service"
+	$(INSTALL_DATA) $(ARCH)/init/retroarch.service "$(DESTDIR)$(INITDIR)/retroarch.service"
 endif
-	$(INSTALL_DATA) $(ARCH)/init/tmpfiles.conf "$(DESTDIR)$(TMPFDIR)/kodi-standalone.conf"
-	$(INSTALL_DATA) $(ARCH)/init/sysusers.conf "$(DESTDIR)$(USERDIR)/kodi-standalone.conf"
+	$(INSTALL_DATA) $(ARCH)/init/tmpfiles.conf "$(DESTDIR)$(TMPFDIR)/retroarch-standalone.conf"
+	$(INSTALL_DATA) $(ARCH)/init/sysusers.conf "$(DESTDIR)$(USERDIR)/retroarch-standalone.conf"
 
 install-man:
 	$(INSTALL_DIR) "$(DESTDIR)$(MANDIR)"
-	$(INSTALL_DATA) $(ARCH)/doc/kodi.service.1 "$(DESTDIR)$(MANDIR)/kodi.service.1"
+	$(INSTALL_DATA) $(ARCH)/doc/retroarch.service.1 "$(DESTDIR)$(MANDIR)/retroarch.service.1"
 
 uninstall:
 ifeq ($(ARCH),x86)
-	$(RM) "$(DESTDIR)$(INITDIR)/kodi-gbm.service"
-	$(RM) "$(DESTDIR)$(INITDIR)/kodi-wayland.service"
-	$(RM) "$(DESTDIR)$(INITDIR)/kodi-x11.service"
+	$(RM) "$(DESTDIR)$(INITDIR)/retroarch-gbm.service"
+	$(RM) "$(DESTDIR)$(INITDIR)/retroarch-wayland.service"
+	$(RM) "$(DESTDIR)$(INITDIR)/retroarch-x11.service"
 else
-	$(RM) "$(DESTDIR)$(INITDIR)/kodi.service"
-	$(RM) "$(DESTDIR)$(POLKDIR)/99-kodi.rules"
+	$(RM) "$(DESTDIR)$(INITDIR)/retroarch.service"
+	$(RM) "$(DESTDIR)$(POLKDIR)/99-retroarch.rules"
 endif
-	$(RM) "$(DESTDIR)$(TMPFDIR)/kodi-standalone.conf"
-	$(RM) "$(DESTDIR)$(USERDIR)/kodi-standalone.conf"
-	$(RM) "$(DESTDIR)$(UDEVDIR)/99-kodi.rules"
-	$(RM) "$(DESTDIR)$(MANDIR)/kodi.service.1"
-	$(RM) "$(DESTDIR)$(ENVDIR)/kodi-standalone"
+	$(RM) "$(DESTDIR)$(TMPFDIR)/retroarch-standalone.conf"
+	$(RM) "$(DESTDIR)$(USERDIR)/retroarch-standalone.conf"
+	$(RM) "$(DESTDIR)$(UDEVDIR)/99-retroarch.rules"
+	$(RM) "$(DESTDIR)$(MANDIR)/retroarch.service.1"
+	$(RM) "$(DESTDIR)$(ENVDIR)/retroarch-standalone"
 
 install: install-common install-init install-man
 
